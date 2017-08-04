@@ -8,6 +8,9 @@ using BingLibrary.hjb;
 using BingLibrary.hjb.Intercepts;
 using System.ComponentModel.Composition;
 using OmicronforAutoSteel.Model;
+using ViewROI;
+using HalconDotNet;
+using System.Collections.ObjectModel;
 
 namespace OmicronforAutoSteel.ViewModel
 {
@@ -36,6 +39,7 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual bool EpsonStatusReady1 { set; get; } = false;
         public virtual string HomePageVisibility { set; get; } = "Visible";
         public virtual string ParameterPageVisibility { set; get; } = "Collapsed";
+        public virtual string CameraPageVisibility { set; get; } = "Collapsed";
         public virtual string EpsonIp { set; get; }
         public virtual int EpsonTestSendPort { set; get; }
         public virtual int EpsonTestReceivePort { set; get; }
@@ -54,13 +58,18 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual bool TestRevPortStatus1 { set; get; } = false;
         public virtual bool MsgRevPortStatus1 { set; get; } = false;
         public virtual bool CtrlPortStatus1 { set; get; } = false;
-
+        public virtual HImage hImage { set; get; }
+        public virtual ObservableCollection<HObject> hObjectList { set; get; }
+        public virtual ObservableCollection<ROI> ROIList { set; get; } = new ObservableCollection<ROI>();
+        public virtual int ActiveIndex { set; get; }
+        public virtual bool Repaint { set; get; }
         #endregion
         #region 变量
         private string MessageStr = "";
         private Robot1 robot1;
         private Robot2 robot2;
         private string iniParameterPath = System.Environment.CurrentDirectory + "\\Parameter.ini";
+        private Camera camera = new Camera();
         #endregion
         #region 构造函数
         public MainDataContext()
@@ -74,18 +83,39 @@ namespace OmicronforAutoSteel.ViewModel
             robot2.RobotPrint += Robot2PrintEventProcess;
             robot1.EpsonStatusUpdate += Robot1StatusUpdateProcess;
             robot2.EpsonStatusUpdate += Robot2StatusUpdateProcess;
+            camera.ImageChanged += CameraImageChangeedProcess;
             ReadParameter();
             UpdateUI();
+            CameraInit();
         }
         #endregion
         #region 测试Function
         public void FunctionTest()
         {
             //MsgText = AddMessage("打印测试");
-            WriteParameter();
+            camera.Action();
         }
         #endregion
         #region 功能与函数
+        public void CameraAction()
+        {
+            camera.Action();
+        }
+        private void CameraInit()
+        {
+            if (camera.OpenDevice())
+            {
+                MsgText = AddMessage("USB相机初始化成功");
+            }
+            else
+            {
+                MsgText = AddMessage("打开相机失败");
+            }
+        }
+        private void CameraImageChangeedProcess()
+        {
+            hImage = camera.himage;
+        }
         /// <summary>
         /// 画面选择
         /// </summary>
@@ -98,10 +128,17 @@ namespace OmicronforAutoSteel.ViewModel
                 case "0":
                     HomePageVisibility = "Visible";
                     ParameterPageVisibility = "Collapsed";
+                    CameraPageVisibility = "Collapsed";
                     break;
                 case "1":
                     HomePageVisibility = "Collapsed";
                     ParameterPageVisibility = "Visible";
+                    CameraPageVisibility = "Collapsed";
+                    break;
+                case "2":
+                    HomePageVisibility = "Collapsed";
+                    ParameterPageVisibility = "Collapsed";
+                    CameraPageVisibility = "Visible";
                     break;
                 default:
                     break;
