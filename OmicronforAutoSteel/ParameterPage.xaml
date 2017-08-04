@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="OmicronforAutoSteel.ParameterPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:control="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:mvvm="clr-namespace:BingLibrary.hjb;assembly=BingLibrary"
+             xmlns:local="clr-namespace:OmicronforAutoSteel"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/Icons.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="机械手1 ">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterName}">IP:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxIp}" Text="{Binding EpsonIp}"></TextBox>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <Ellipse Style="{StaticResource EllipseTestSend}"></Ellipse>
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">命令发Port:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonTestSendPort}"></TextBox>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <Ellipse Style="{StaticResource EllipseTestRev}"></Ellipse>
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">命令收Port:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonTestReceivePort}"></TextBox>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <Ellipse Style="{StaticResource EllipseMsgRev}"></Ellipse>
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">信息收Port:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonMsgReceivePort}"></TextBox>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <Ellipse Style="{StaticResource EllipseCtrl}"></Ellipse>
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">远程Port:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonRemoteControlPort}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="机械手2 " Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                        <TextBlock Style="{StaticResource TextBlockParameterName}">IP:</TextBlock>
+                        <TextBox Style="{StaticResource TextBoxIp}" Text="{Binding EpsonIp1}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                        <Ellipse Style="{StaticResource EllipseTestSend1}"></Ellipse>
+                        <TextBlock Style="{StaticResource TextBlockParameterLoneName}">命令发Port:</TextBlock>
+                        <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonTestSendPort1}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                        <Ellipse Style="{StaticResource EllipseTestRev1}"></Ellipse>
+                        <TextBlock Style="{StaticResource TextBlockParameterLoneName}">测试收Port:</TextBlock>
+                        <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonTestReceivePort1}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                        <Ellipse Style="{StaticResource EllipseMsgRev1}"></Ellipse>
+                        <TextBlock Style="{StaticResource TextBlockParameterLoneName}">信息收Port:</TextBlock>
+                        <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonMsgReceivePort1}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                        <Ellipse Style="{StaticResource EllipseCtrl1}"></Ellipse>
+                        <TextBlock Style="{StaticResource TextBlockParameterLoneName}">远程Port:</TextBlock>
+                        <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding EpsonRemoteControlPort1}"></TextBox>
+                    </StackPanel>
+                </StackPanel>
+                <control:Tile Style="{StaticResource TileBase}" Grid.Column="1" Command="{mvvm:ActionAuto SaveParameter}" Title="保存">
+                    <Rectangle Style="{StaticResource MetroTileRectangle}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                                     Visual="{DynamicResource appbar_save}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </control:Tile>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+</UserControl>

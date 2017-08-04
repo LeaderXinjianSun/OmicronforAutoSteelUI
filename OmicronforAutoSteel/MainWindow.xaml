@@ -11,6 +11,23 @@
                      BorderThickness="0" GlowBrush="Black"  ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True"
                      Icon="/icons/Devices_computer_64px_1187133_easyicon.net.ico" Height="600" Width="800" DataContext="{mvvm:Data md}">
     <Grid>
-        <TextBlock Text="{Binding Text}"></TextBlock>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Dictionary1.xaml"></ResourceDictionary>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="92*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu VerticalAlignment="Center">
+            <MenuItem Header="主页" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="0"></MenuItem>
+            <MenuItem Header="参数" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="1"></MenuItem>
+        </Menu>
+        <local:HomePage Grid.Row="1" Visibility="{Binding HomePageVisibility,FallbackValue=Visible}"></local:HomePage>
+        <local:ParameterPage Grid.Row="1" Visibility="{Binding ParameterPageVisibility,FallbackValue=Collapsed}"></local:ParameterPage>
     </Grid>
 </control:MetroWindow>

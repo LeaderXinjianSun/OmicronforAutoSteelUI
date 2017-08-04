@@ -41,7 +41,7 @@ namespace BingLibrary.hjb
             return r;
         }
 
-        private void IsOnline()
+        public void IsOnline()
         {
             try
             {
