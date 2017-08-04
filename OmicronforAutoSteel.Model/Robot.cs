@@ -95,7 +95,7 @@ namespace OmicronforAutoSteel.Model
                         bool r1 = await TestSentNet.Connect(EpsonIp, EpsonTestSendPort);
                         if (r1)
                         {
-                            ModelPrint("机械手TestSentNet连接");
+                            ModelPrint("机械手1TestSentNet连接");
                         }
                     }
                 }
@@ -203,7 +203,7 @@ namespace OmicronforAutoSteel.Model
                     if (s == "error")
                     {
                         TestReceiveNet.tcpConnected = false;
-                        ModelPrint("机械手TestReceiveNet断开");
+                        ModelPrint("机械手1TestReceiveNet断开");
                     }
                     else
                     {

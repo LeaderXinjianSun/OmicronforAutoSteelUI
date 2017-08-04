@@ -124,15 +124,19 @@ namespace OmicronforAutoSteel.ViewModel
         }
         private async void UpdateUI()
         {
-            await Task.Delay(100);
-            TestSendPortStatus = robot1.TestSentNet.tcpConnected;
-            TestRevPortStatus = robot1.TestReceiveNet.tcpConnected;
-            MsgRevPortStatus = robot1.MsgReceiveNet.tcpConnected;
-            CtrlPortStatus = robot1.CtrlNet.tcpConnected;
-            TestSendPortStatus1 = robot2.TestSentNet.tcpConnected;
-            TestRevPortStatus1 = robot2.TestReceiveNet.tcpConnected;
-            MsgRevPortStatus1 = robot2.MsgReceiveNet.tcpConnected;
-            CtrlPortStatus1 = robot2.CtrlNet.tcpConnected;
+            while (true)
+            {
+                await Task.Delay(100);
+                TestSendPortStatus = robot1.TestSentNet.tcpConnected;
+                TestRevPortStatus = robot1.TestReceiveNet.tcpConnected;
+                MsgRevPortStatus = robot1.MsgReceiveNet.tcpConnected;
+                CtrlPortStatus = robot1.CtrlNet.tcpConnected;
+                TestSendPortStatus1 = robot2.TestSentNet.tcpConnected;
+                TestRevPortStatus1 = robot2.TestReceiveNet.tcpConnected;
+                MsgRevPortStatus1 = robot2.MsgReceiveNet.tcpConnected;
+                CtrlPortStatus1 = robot2.CtrlNet.tcpConnected;
+            }
+ 
         }
         private void ModelPrintEventProcess(string str)
         {
