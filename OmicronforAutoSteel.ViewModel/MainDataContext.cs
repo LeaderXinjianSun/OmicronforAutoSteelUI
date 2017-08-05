@@ -58,6 +58,9 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual bool TestRevPortStatus1 { set; get; } = false;
         public virtual bool MsgRevPortStatus1 { set; get; } = false;
         public virtual bool CtrlPortStatus1 { set; get; } = false;
+        public virtual string DeltaAS300Ip { set; get; }
+        public virtual bool DeltaAS300PortStatus { set; get; }
+        public virtual int DeltaAS300Port { set; get; }
         public virtual HImage hImage { set; get; }
         public virtual ObservableCollection<HObject> hObjectList { set; get; }
         public virtual ObservableCollection<ROI> ROIList { set; get; } = new ObservableCollection<ROI>();
@@ -70,6 +73,7 @@ namespace OmicronforAutoSteel.ViewModel
         private Robot2 robot2;
         private string iniParameterPath = System.Environment.CurrentDirectory + "\\Parameter.ini";
         private Camera camera = new Camera();
+        private DeltaAS300 deltaAS300;
         #endregion
         #region 构造函数
         public MainDataContext()
@@ -84,6 +88,9 @@ namespace OmicronforAutoSteel.ViewModel
             robot1.EpsonStatusUpdate += Robot1StatusUpdateProcess;
             robot2.EpsonStatusUpdate += Robot2StatusUpdateProcess;
             camera.ImageChanged += CameraImageChangeedProcess;
+            deltaAS300 = new DeltaAS300();
+            deltaAS300.tcpListenerServer.SeverPrint += ModelPrintEventProcess;
+            deltaAS300.tcpsevertest();
             ReadParameter();
             UpdateUI();
             CameraInit();
@@ -172,6 +179,7 @@ namespace OmicronforAutoSteel.ViewModel
                 TestRevPortStatus1 = robot2.TestReceiveNet.tcpConnected;
                 MsgRevPortStatus1 = robot2.MsgReceiveNet.tcpConnected;
                 CtrlPortStatus1 = robot2.CtrlNet.tcpConnected;
+                DeltaAS300PortStatus = deltaAS300.tcpListenerServer.ServerStatus;
             }
  
         }
@@ -228,6 +236,8 @@ namespace OmicronforAutoSteel.ViewModel
                 Inifile.INIWriteValue(iniParameterPath, "Epson", "EpsonTestReceivePort1", EpsonTestReceivePort1.ToString());
                 Inifile.INIWriteValue(iniParameterPath, "Epson", "EpsonMsgReceivePort1", EpsonMsgReceivePort1.ToString());
                 Inifile.INIWriteValue(iniParameterPath, "Epson", "EpsonRemoteControlPort1", EpsonRemoteControlPort1.ToString());
+                Inifile.INIWriteValue(iniParameterPath, "Delta", "DeltaAS300Ip", DeltaAS300Ip);
+                Inifile.INIWriteValue(iniParameterPath, "Delta", "DeltaAS300Port", DeltaAS300Port.ToString());
                 MsgText = AddMessage("保存参数完成");
             }
             catch (Exception ex)
@@ -252,6 +262,8 @@ namespace OmicronforAutoSteel.ViewModel
                 EpsonTestReceivePort1 = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Epson", "EpsonTestReceivePort1", "2001"));
                 EpsonMsgReceivePort1 = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Epson", "EpsonMsgReceivePort1", "2002"));
                 EpsonRemoteControlPort1 = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Epson", "EpsonRemoteControlPort1", "5000"));
+                DeltaAS300Ip = Inifile.INIGetStringValue(iniParameterPath, "Delta", "DeltaAS300Ip", "192.168.1.5");
+                DeltaAS300Port = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Delta", "DeltaAS300Port", "9000"));
                 MsgText = AddMessage("读取参数完成");
             }
             catch (Exception ex)

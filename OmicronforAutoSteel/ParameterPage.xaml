@@ -96,5 +96,18 @@
             </Grid>
 
         </GroupBox>
+        <GroupBox Grid.Row="1" Header="PLC">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterName}">本机IP:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxIp}" Text="{Binding DeltaAS300Ip}"></TextBox>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <Ellipse Style="{StaticResource EllipseDeltaAS300}"></Ellipse>
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">服务器Port:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding DeltaAS300Port}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

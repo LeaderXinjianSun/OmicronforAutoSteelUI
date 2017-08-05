@@ -191,6 +191,13 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style TargetType="{x:Type Ellipse}" BasedOn="{StaticResource EllipseBase}" x:Key="EllipseDeltaAS300">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DeltaAS300PortStatus}" Value="true">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}" x:Key="TextBoxPort">
         <Setter Property="Width" Value="70"></Setter>
     </Style>
