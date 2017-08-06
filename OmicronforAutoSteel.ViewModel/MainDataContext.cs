@@ -61,6 +61,9 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual string DeltaAS300Ip { set; get; }
         public virtual bool DeltaAS300PortStatus { set; get; }
         public virtual int DeltaAS300Port { set; get; }
+        public virtual string AOISoftwareIp { set; get; }
+        public virtual bool AOISoftwarePortStatus { set; get; }
+        public virtual int AOISoftwarePort { set; get; }
         public virtual HImage hImage { set; get; }
         public virtual ObservableCollection<HObject> hObjectList { set; get; }
         public virtual ObservableCollection<ROI> ROIList { set; get; } = new ObservableCollection<ROI>();
@@ -74,6 +77,7 @@ namespace OmicronforAutoSteel.ViewModel
         private string iniParameterPath = System.Environment.CurrentDirectory + "\\Parameter.ini";
         private Camera camera = new Camera();
         private DeltaAS300 deltaAS300;
+        private AOICCD aOICCD;
         #endregion
         #region 构造函数
         public MainDataContext()
@@ -89,11 +93,14 @@ namespace OmicronforAutoSteel.ViewModel
             robot2.EpsonStatusUpdate += Robot2StatusUpdateProcess;
             camera.ImageChanged += CameraImageChangeedProcess;
             deltaAS300 = new DeltaAS300();
+            aOICCD = new AOICCD();
             deltaAS300.tcpListenerServer.SeverPrint += ModelPrintEventProcess;
+            aOICCD.ModelPrint += ModelPrintEventProcess;
             deltaAS300.tcpsevertest();
             ReadParameter();
             UpdateUI();
             CameraInit();
+            PLCRun();
         }
         #endregion
         #region 测试Function
@@ -122,6 +129,53 @@ namespace OmicronforAutoSteel.ViewModel
         private void CameraImageChangeedProcess()
         {
             hImage = camera.himage;
+        }
+        private void AOIActioncallback(string s)
+        {
+            try
+            {
+                for (int i = 0; i < 50; i++)
+                {
+                    deltaAS300.YY[i] = false;
+                }
+                string[] strs = s.Split(';');
+                for (int i = 1; i < strs.Length; i++)
+                {
+                    deltaAS300.YY[int.Parse(strs[i]) + 1] = true;
+                }
+                deltaAS300.YY[1] = true;
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("MainDataContext.AOIActioncallback", ex.Message);
+            }
+        }
+        private async void PLCRun()
+        {
+            bool XX0 = false, XX1 = false;
+            while (true)
+            {
+                await Task.Delay(10);
+                if (XX0 != deltaAS300.XX[0])
+                {
+                    XX0 = deltaAS300.XX[0];
+                    if (XX0)
+                    {
+                        deltaAS300.YY[0] = false;
+                        deltaAS300.YY[28] = await camera.Action();
+                        deltaAS300.YY[0] = true;
+                    }
+                }
+                if (XX1 != deltaAS300.XX[1])
+                {
+                    XX1 = deltaAS300.XX[1];
+                    if (XX1)
+                    {
+                        deltaAS300.YY[1] = false;
+                        aOICCD.Action(AOIActioncallback);
+                    }
+                }
+            }
         }
         /// <summary>
         /// 画面选择
@@ -180,6 +234,7 @@ namespace OmicronforAutoSteel.ViewModel
                 MsgRevPortStatus1 = robot2.MsgReceiveNet.tcpConnected;
                 CtrlPortStatus1 = robot2.CtrlNet.tcpConnected;
                 DeltaAS300PortStatus = deltaAS300.tcpListenerServer.ServerStatus;
+                AOISoftwarePortStatus = aOICCD.AOISentNet.tcpConnected;
             }
  
         }
@@ -238,6 +293,8 @@ namespace OmicronforAutoSteel.ViewModel
                 Inifile.INIWriteValue(iniParameterPath, "Epson", "EpsonRemoteControlPort1", EpsonRemoteControlPort1.ToString());
                 Inifile.INIWriteValue(iniParameterPath, "Delta", "DeltaAS300Ip", DeltaAS300Ip);
                 Inifile.INIWriteValue(iniParameterPath, "Delta", "DeltaAS300Port", DeltaAS300Port.ToString());
+                Inifile.INIWriteValue(iniParameterPath, "AOI", "AOISoftwareIp", AOISoftwareIp);
+                Inifile.INIWriteValue(iniParameterPath, "AOI", "AOISoftwarePort", AOISoftwarePort.ToString());
                 MsgText = AddMessage("保存参数完成");
             }
             catch (Exception ex)
@@ -262,8 +319,10 @@ namespace OmicronforAutoSteel.ViewModel
                 EpsonTestReceivePort1 = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Epson", "EpsonTestReceivePort1", "2001"));
                 EpsonMsgReceivePort1 = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Epson", "EpsonMsgReceivePort1", "2002"));
                 EpsonRemoteControlPort1 = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Epson", "EpsonRemoteControlPort1", "5000"));
-                DeltaAS300Ip = Inifile.INIGetStringValue(iniParameterPath, "Delta", "DeltaAS300Ip", "192.168.1.5");
+                DeltaAS300Ip = Inifile.INIGetStringValue(iniParameterPath, "Delta", "DeltaAS300Ip", "192.168.1.100");
                 DeltaAS300Port = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "Delta", "DeltaAS300Port", "9000"));
+                AOISoftwareIp = Inifile.INIGetStringValue(iniParameterPath, "AOI", "AOISoftwareIp", "192.168.1.100");
+                AOISoftwarePort = int.Parse(Inifile.INIGetStringValue(iniParameterPath, "AOI", "AOISoftwarePort", "8010"));
                 MsgText = AddMessage("读取参数完成");
             }
             catch (Exception ex)

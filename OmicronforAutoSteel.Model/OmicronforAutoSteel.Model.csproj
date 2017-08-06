@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AOICCD.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="DeltaAS300.cs" />
     <Compile Include="Robot.cs" />

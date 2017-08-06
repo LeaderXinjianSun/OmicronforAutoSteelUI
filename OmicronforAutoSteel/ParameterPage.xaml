@@ -109,5 +109,18 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="1" Header="AOI">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterName}">IP:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxIp}" Text="{Binding AOISoftwareIp}"></TextBox>
+                </StackPanel>
+                <StackPanel Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <Ellipse Style="{StaticResource EllipseAOISoftware}"></Ellipse>
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Port:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding AOISoftwarePort}"></TextBox>
+                </StackPanel>
+            </StackPanel>            
+        </GroupBox>
     </Grid>
 </UserControl>

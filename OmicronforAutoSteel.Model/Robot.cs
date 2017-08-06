@@ -202,8 +202,8 @@ namespace OmicronforAutoSteel.Model
 
                     if (s == "error")
                     {
-                        TestReceiveNet.tcpConnected = false;
-                        ModelPrint("机械手1TestReceiveNet断开");
+                        //TestReceiveNet.tcpConnected = false;
+                        //ModelPrint("机械手1TestReceiveNet断开");
                     }
                     else
                     {
@@ -251,8 +251,8 @@ namespace OmicronforAutoSteel.Model
 
                     if (s == "error")
                     {
-                        MsgReceiveNet.tcpConnected = false;
-                        ModelPrint("机械手1MsgReceiveNet断开");
+                        //MsgReceiveNet.tcpConnected = false;
+                        //ModelPrint("机械手1MsgReceiveNet断开");
                     }
                     else
                     {
@@ -476,8 +476,8 @@ namespace OmicronforAutoSteel.Model
 
                     if (s == "error")
                     {
-                        TestReceiveNet.tcpConnected = false;
-                        ModelPrint("机械手2TestReceiveNet断开");
+                        //TestReceiveNet.tcpConnected = false;
+                        //ModelPrint("机械手2TestReceiveNet断开");
                     }
                     else
                     {
@@ -525,8 +525,8 @@ namespace OmicronforAutoSteel.Model
 
                     if (s == "error")
                     {
-                        MsgReceiveNet.tcpConnected = false;
-                        ModelPrint("机械手2MsgReceiveNet断开");
+                        //MsgReceiveNet.tcpConnected = false;
+                        //ModelPrint("机械手2MsgReceiveNet断开");
                     }
                     else
                     {

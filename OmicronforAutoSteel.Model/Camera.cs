@@ -32,7 +32,9 @@ namespace OmicronforAutoSteel.Model
             try
             {
                 HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "rgb",
-    -1, "false", "default", "HD USB Camera", 0, -1, out hv_AcqHandle);
+    -1, "false", "default", "Integrated Camera", 0, -1, out hv_AcqHandle);
+                //Integrated Camera
+                //HD USB Camera
                 r = true;
                 status = true;
             }
@@ -45,15 +47,22 @@ namespace OmicronforAutoSteel.Model
             return r;
 
         }
-        public void Action()
+        public async Task<bool> Action()
         {
-            if (status)
+            await ((Func<Task>)(() =>
             {
-                ho_Image.Dispose();
-                HOperatorSet.GrabImage(out ho_Image, hv_AcqHandle);
-                himage = HObjectToHImage(ho_Image);
-                ImageChanged();
-            }
+                return Task.Run(() =>
+                {
+                    if (status)
+                    {
+                        ho_Image.Dispose();
+                        HOperatorSet.GrabImage(out ho_Image, hv_AcqHandle);
+                        himage = HObjectToHImage(ho_Image);
+                        ImageChanged();
+                    }
+                });
+            }))();
+            return true;
         }
         public void CloseDevice()
         {
