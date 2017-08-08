@@ -69,6 +69,11 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual ObservableCollection<ROI> ROIList { set; get; } = new ObservableCollection<ROI>();
         public virtual int ActiveIndex { set; get; }
         public virtual bool Repaint { set; get; }
+        public virtual bool PLCConnect { set; get; }
+        public virtual bool Robot1Connect{ set; get; }
+        public virtual bool Robot2Connect { set; get; }
+        public virtual bool AOICameraConnect { set; get; }
+        public virtual bool IsRobotReady { set; get; }
         #endregion
         #region 变量
         private string MessageStr = "";
@@ -78,6 +83,7 @@ namespace OmicronforAutoSteel.ViewModel
         private Camera camera = new Camera();
         private DeltaAS300 deltaAS300;
         private AOICCD aOICCD;
+        private dialog mydialog = new dialog();
         #endregion
         #region 构造函数
         public MainDataContext()
@@ -209,9 +215,36 @@ namespace OmicronforAutoSteel.ViewModel
         /// 机械手操作
         /// </summary>
         /// <param name="p"></param>
-        public void EpsonOpetate(object p)
+        public async void EpsonOpetate(object p)
         {
-
+            string s = p.ToString();
+            switch (s)
+            {
+                case "1":
+                    robot1.StartOperate();
+                    robot2.StartOperate();
+                    break;
+                case "2":
+                    robot1.PauseOperate();
+                    robot2.PauseOperate();
+                    break;
+                case "3":
+                    robot1.ContinueOperate();
+                    robot2.ContinueOperate();
+                    break;
+                case "4":
+                    mydialog.changeaccent("red");
+                    var r = await mydialog.showconfirm("确定进行机械手重启操作吗？");
+                    if (r)
+                    {
+                        robot1.ReStartOperate();
+                        robot2.ReStartOperate();
+                    }
+                    mydialog.changeaccent("Cobalt");
+                    break;
+                default:
+                    break;
+            }
         }
         /// <summary>
         /// 界面保存按钮
@@ -235,6 +268,11 @@ namespace OmicronforAutoSteel.ViewModel
                 CtrlPortStatus1 = robot2.CtrlNet.tcpConnected;
                 DeltaAS300PortStatus = deltaAS300.tcpListenerServer.ServerStatus;
                 AOISoftwarePortStatus = aOICCD.AOISentNet.tcpConnected;
+                PLCConnect = DeltaAS300PortStatus;
+                Robot1Connect = TestSendPortStatus && TestRevPortStatus && MsgRevPortStatus && CtrlPortStatus;
+                Robot2Connect = TestSendPortStatus1 && TestRevPortStatus1 && MsgRevPortStatus1 && CtrlPortStatus1;
+                AOICameraConnect = AOISoftwarePortStatus;
+                IsRobotReady = Robot1Connect && Robot2Connect;
             }
  
         }

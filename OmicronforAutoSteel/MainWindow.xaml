@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="OmicronforAutoSteel" WindowStartupLocation="CenterScreen"
                      BorderThickness="0" GlowBrush="Black"  ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True"
-                     Icon="/icons/Devices_computer_64px_1187133_easyicon.net.ico" Height="600" Width="800" DataContext="{mvvm:Data md}">
+                     Icon="/icons/Devices_computer_64px_1187133_easyicon.net.ico" Height="600" Width="800" DataContext="{mvvm:Data md}" Closing="MetroWindow_Closing">
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
@@ -31,5 +31,31 @@
         <local:HomePage Grid.Row="1" Visibility="{Binding HomePageVisibility,FallbackValue=Visible}"></local:HomePage>
         <local:ParameterPage Grid.Row="1" Visibility="{Binding ParameterPageVisibility,FallbackValue=Collapsed}"></local:ParameterPage>
         <local:CameraPage Grid.Row="1" Visibility="{Binding CameraPageVisibility,FallbackValue=Collapsed}"></local:CameraPage>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock>PLC</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Ellipse Style="{StaticResource PLCConnectStatus}"></Ellipse>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>机械手1</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Ellipse Style="{StaticResource Robot1ConnectStatus}"></Ellipse>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>机械手2</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Ellipse Style="{StaticResource Robot2ConnectStatus}"></Ellipse>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>AOI视觉</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Ellipse Style="{StaticResource AOICameraConnectStatus}"></Ellipse>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </control:MetroWindow>

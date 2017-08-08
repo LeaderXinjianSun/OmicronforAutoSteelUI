@@ -150,6 +150,78 @@ namespace OmicronforAutoSteel.Model
                 { await Task.Delay(15000); }
             }
         }
+        public async void StartOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$start,0");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot1.StartOperate", ex.Message);
+            }
+        }
+        public async void PauseOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$pause");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot1.PauseOperate", ex.Message);
+            }
+        }
+        public async void ContinueOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$continue");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot1.ContinueOperate", ex.Message);
+            }
+        }
+        public async void ReStartOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$stop");
+                        await Task.Delay(500);
+                        await CtrlNet.SendAsync("$SetMotorOff,1");
+                        await Task.Delay(500);
+                        await CtrlNet.SendAsync("$reset");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot1.ReStartOperate", ex.Message);
+            }
+        }
         private async void GetStatus()
         {
             string status = "";
@@ -422,6 +494,78 @@ namespace OmicronforAutoSteel.Model
                 }
                 else
                 { await Task.Delay(15000); }
+            }
+        }
+        public async void StartOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$start,0");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot2.StartOperate", ex.Message);
+            }
+        }
+        public async void PauseOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$pause");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot2.PauseOperate", ex.Message);
+            }
+        }
+        public async void ContinueOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$continue");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot2.ContinueOperate", ex.Message);
+            }
+        }
+        public async void ReStartOperate()
+        {
+            try
+            {
+                if (CtrlNet.tcpConnected)
+                {
+                    using (var releaser = await m_lock1.LockAsync())
+                    {
+                        await CtrlNet.SendAsync("$stop");
+                        await Task.Delay(500);
+                        await CtrlNet.SendAsync("$SetMotorOff,1");
+                        await Task.Delay(500);
+                        await CtrlNet.SendAsync("$reset");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Default.Error("Robot2.ReStartOperate", ex.Message);
             }
         }
         private async void GetStatus()

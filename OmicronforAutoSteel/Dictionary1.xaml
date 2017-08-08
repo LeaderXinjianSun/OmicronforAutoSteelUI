@@ -266,4 +266,37 @@
         <Setter Property="Height" Value="25"></Setter>
         <Setter Property="Fill" Value="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type control:Tile}}}"></Setter>
     </Style>
+    <Style TargetType="Ellipse" x:Key="EllipseStatusBase">
+        <Setter Property="Fill" Value="Red"></Setter>
+        <Setter Property="Width" Value="15"></Setter>
+        <Setter Property="Height" Value="15"></Setter>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource EllipseStatusBase}" x:Key="PLCConnectStatus">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding PLCConnect}" Value="true">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource EllipseStatusBase}" x:Key="Robot1ConnectStatus">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Robot1Connect}" Value="true">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource EllipseStatusBase}" x:Key="Robot2ConnectStatus">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Robot2Connect}" Value="true">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource EllipseStatusBase}" x:Key="AOICameraConnectStatus">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding AOICameraConnect}" Value="true">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
