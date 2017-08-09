@@ -63,7 +63,7 @@ namespace BingLibrary.hjb
                         byte[] data = new Byte[256];
                         string responseData = string.Empty;
                         stream = client.GetStream();
-                        stream.ReadTimeout = 6;
+                        stream.ReadTimeout = 30000;
                         Int32 bytes = stream.Read(data, 0, data.Length);
                         // Int32 bytes = await stream.ReadAsync(data, 0, data.Length);
                         tempS = Encoding.ASCII.GetString(data, 0, bytes);

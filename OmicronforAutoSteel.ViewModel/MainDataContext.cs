@@ -140,7 +140,7 @@ namespace OmicronforAutoSteel.ViewModel
         {
             try
             {
-                for (int i = 0; i < 50; i++)
+                for (int i = 2; i < 27; i++)
                 {
                     deltaAS300.YY[i] = false;
                 }
@@ -161,14 +161,15 @@ namespace OmicronforAutoSteel.ViewModel
             bool XX0 = false, XX1 = false;
             while (true)
             {
-                await Task.Delay(10);
+                await Task.Delay(100);
                 if (XX0 != deltaAS300.XX[0])
                 {
                     XX0 = deltaAS300.XX[0];
                     if (XX0)
                     {
                         deltaAS300.YY[0] = false;
-                        deltaAS300.YY[28] = await camera.Action();
+                        //deltaAS300.YY[28] = await camera.Action();
+                        await Task.Delay(1000);
                         deltaAS300.YY[0] = true;
                     }
                 }
@@ -178,6 +179,8 @@ namespace OmicronforAutoSteel.ViewModel
                     if (XX1)
                     {
                         deltaAS300.YY[1] = false;
+                        //await Task.Delay(1000);
+                        //AOIActioncallback("");
                         aOICCD.Action(AOIActioncallback);
                     }
                 }

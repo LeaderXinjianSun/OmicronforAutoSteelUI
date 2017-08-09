@@ -257,7 +257,7 @@ namespace OmicronforAutoSteel.Model
         {
             while (true)
             {
-                //await Task.Delay(100);
+                await Task.Delay(100);
                 if (TestReceiveNet.tcpConnected == true)
                 {
                     string s = await TestReceiveNet.ReceiveAsync();
@@ -307,7 +307,7 @@ namespace OmicronforAutoSteel.Model
         {
             while (true)
             {
-                //await Task.Delay(100);
+                await Task.Delay(100);
                 if (MsgReceiveNet.tcpConnected == true)
                 {
                     string s = await MsgReceiveNet.ReceiveAsync();
@@ -603,7 +603,7 @@ namespace OmicronforAutoSteel.Model
         {
             while (true)
             {
-                //await Task.Delay(100);
+                await Task.Delay(100);
                 if (TestReceiveNet.tcpConnected == true)
                 {
                     string s = await TestReceiveNet.ReceiveAsync();
@@ -653,7 +653,7 @@ namespace OmicronforAutoSteel.Model
         {
             while (true)
             {
-                //await Task.Delay(100);
+                await Task.Delay(100);
                 if (MsgReceiveNet.tcpConnected == true)
                 {
                     string s = await MsgReceiveNet.ReceiveAsync();

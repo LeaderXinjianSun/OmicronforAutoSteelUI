@@ -101,7 +101,7 @@ namespace OmicronforAutoSteel.Model
                         }
                         else
                         {
-                            await Task.Delay(100);
+                            await Task.Delay(1000);
                         }
                     }
                 }
