@@ -299,4 +299,20 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource EllipseStatusBase}" x:Key="USBCameraConnectStatus">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding USBCameraConnect}" Value="true">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="CameraResultStatus">
+        <Setter Property="Foreground" Value="Red"></Setter>
+        <Setter Property="FontSize" Value="40"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding CameraResult}" Value="OK">
+                <Setter Property="Foreground" Value="Lime"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

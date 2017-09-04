@@ -26,17 +26,31 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <GroupBox Header="摄像机">
-            <local:HcImageView Image="{Binding hImage}" HObjectList="{Binding hObjectList}" ActiveIndex="{Binding ActiveIndex, Mode=TwoWay}" Repaint="{Binding Repaint}" ROIChanged="{Binding ROIChanged,Mode=OneWayToSource}"  ROIList="{Binding ROIList}"></local:HcImageView>
+            <Grid>
+                <local:HcImageView Image="{Binding hImage}" HObjectList="{Binding hObjectList}" ActiveIndex="{Binding ActiveIndex, Mode=TwoWay}" Repaint="{Binding Repaint}" ROIChanged="{Binding ROIChanged,Mode=OneWayToSource}"  ROIList="{Binding ROIList}"></local:HcImageView>
+            </Grid>
+            
         </GroupBox>
-        <GroupBox Header="操作" Grid.Column="1">
-            <control:Tile Style="{StaticResource TileBase}" Grid.Column="1" Command="{mvvm:ActionAuto CameraAction}" Title="拍照">
+        <GroupBox Header="结果" Grid.Column="1">
+            <!--<control:Tile Style="{StaticResource TileBase}" Grid.Column="1" Command="{mvvm:ActionAuto CameraAction}" Title="拍照">
                 <Rectangle Style="{StaticResource MetroTileRectangle}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                                      Visual="{DynamicResource appbar_camera}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-            </control:Tile>
+            </control:Tile>-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource CameraResultStatus}" Text="{Binding CameraResult}"></TextBlock>
+            </Grid>
         </GroupBox>
     </Grid>
 

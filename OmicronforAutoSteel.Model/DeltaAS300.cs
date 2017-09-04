@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BingLibrary.hjb;
 using System.Net.Sockets;
 using System.Net; // for the ip address
+using System.Threading;
 
 namespace OmicronforAutoSteel.Model
 {
@@ -119,6 +120,7 @@ namespace OmicronforAutoSteel.Model
             {
                 try
                 {
+                    Thread.Sleep(100);
                     TcpClient client = server.AcceptTcpClient();
                     SeverPrint("PLC已连接 "+client.Client.RemoteEndPoint.ToString());
                     NetworkStream stream = client.GetStream();

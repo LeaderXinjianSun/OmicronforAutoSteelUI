@@ -56,6 +56,12 @@
             <StatusBarItem>
                 <Ellipse Style="{StaticResource AOICameraConnectStatus}"></Ellipse>
             </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>USB相机</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Ellipse Style="{StaticResource USBCameraConnectStatus}"></Ellipse>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </control:MetroWindow>

@@ -65,7 +65,7 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual bool AOISoftwarePortStatus { set; get; }
         public virtual int AOISoftwarePort { set; get; }
         public virtual HImage hImage { set; get; }
-        public virtual ObservableCollection<HObject> hObjectList { set; get; }
+        public virtual ObservableCollection<HObject> hObjectList { set; get; } 
         public virtual ObservableCollection<ROI> ROIList { set; get; } = new ObservableCollection<ROI>();
         public virtual int ActiveIndex { set; get; }
         public virtual bool Repaint { set; get; }
@@ -73,7 +73,9 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual bool Robot1Connect{ set; get; }
         public virtual bool Robot2Connect { set; get; }
         public virtual bool AOICameraConnect { set; get; }
+        public virtual bool USBCameraConnect { set; get; }
         public virtual bool IsRobotReady { set; get; }
+        public virtual string CameraResult { set; get; }
         #endregion
         #region 变量
         private string MessageStr = "";
@@ -84,6 +86,8 @@ namespace OmicronforAutoSteel.ViewModel
         private DeltaAS300 deltaAS300;
         private AOICCD aOICCD;
         private dialog mydialog = new dialog();
+        ObservableCollection<HObject> _hObjectList = new ObservableCollection<HObject>();
+        public readonly AsyncLock m_lock1 = new AsyncLock();
         #endregion
         #region 构造函数
         public MainDataContext()
@@ -98,6 +102,7 @@ namespace OmicronforAutoSteel.ViewModel
             robot1.EpsonStatusUpdate += Robot1StatusUpdateProcess;
             robot2.EpsonStatusUpdate += Robot2StatusUpdateProcess;
             camera.ImageChanged += CameraImageChangeedProcess;
+            camera.FindChanged += FindChangedProcess;
             deltaAS300 = new DeltaAS300();
             aOICCD = new AOICCD();
             deltaAS300.tcpListenerServer.SeverPrint += ModelPrintEventProcess;
@@ -106,25 +111,47 @@ namespace OmicronforAutoSteel.ViewModel
             ReadParameter();
             UpdateUI();
             CameraInit();
+            
             PLCRun();
+            Runloop();
         }
         #endregion
         #region 测试Function
         public void FunctionTest()
         {
             //MsgText = AddMessage("打印测试");
-            camera.Action();
+            //camera.Action();
         }
         #endregion
         #region 功能与函数
-        public void CameraAction()
+        public async void CameraAction()
         {
-            camera.Action();
+            _hObjectList.Clear();
+            hObjectList = null;
+            int tt = 0;
+            using (var releaser = await m_lock1.LockAsync())
+            {
+                tt = await camera.RunAction();
+                if (tt == -1)
+                {
+                    _hObjectList.Clear();
+                    tt = await camera.RunAction();
+                }
+            }
+            if (_hObjectList.Count > 0)
+            {
+                hObjectList = _hObjectList;
+            }
         }
         private void CameraInit()
         {
             if (camera.OpenDevice())
             {
+                camera.CreatModel();
+                if (_hObjectList.Count > 0)
+                {
+                    hObjectList = _hObjectList;
+                }
                 MsgText = AddMessage("USB相机初始化成功");
             }
             else
@@ -136,6 +163,11 @@ namespace OmicronforAutoSteel.ViewModel
         {
             hImage = camera.himage;
         }
+        private void FindChangedProcess(HObject ht)
+        {
+            HObject tt = new HObject(ht); ;
+            _hObjectList.Add(tt);
+        }
         private void AOIActioncallback(string s)
         {
             try
@@ -144,11 +176,19 @@ namespace OmicronforAutoSteel.ViewModel
                 {
                     deltaAS300.YY[i] = false;
                 }
-                string[] strs = s.Split(';');
-                for (int i = 1; i < strs.Length; i++)
+                if (s == "OK")
                 {
-                    deltaAS300.YY[int.Parse(strs[i]) + 1] = true;
+
                 }
+                else
+                {
+                    string[] strs = s.Split(';');
+                    for (int i = 1; i < strs.Length; i++)
+                    {
+                        deltaAS300.YY[int.Parse(strs[i]) + 1] = true;
+                    }
+                }
+  
                 deltaAS300.YY[1] = true;
             }
             catch (Exception ex)
@@ -168,9 +208,31 @@ namespace OmicronforAutoSteel.ViewModel
                     if (XX0)
                     {
                         deltaAS300.YY[0] = false;
-                        //deltaAS300.YY[28] = await camera.Action();
-                        await Task.Delay(1000);
+                        //deltaAS300.YY[28] = camera.Action();
+                        _hObjectList.Clear();
+                        hObjectList = null;
+                        int tt = 0;
+                        using (var releaser = await m_lock1.LockAsync())
+                        {
+                            tt = await camera.RunAction();
+                            if (tt == -1)
+                            {
+                                _hObjectList.Clear();
+                                tt = await camera.RunAction();
+                            }
+                        }
+                        deltaAS300.YY[28] = tt == 1;
+                        
+                        if (_hObjectList.Count > 0)
+                        {
+                            hObjectList = _hObjectList;
+                        }
+                        await Task.Delay(200);
                         deltaAS300.YY[0] = true;
+                    }
+                    else
+                    {
+                        deltaAS300.YY[0] = false;
                     }
                 }
                 if (XX1 != deltaAS300.XX[1])
@@ -179,9 +241,34 @@ namespace OmicronforAutoSteel.ViewModel
                     if (XX1)
                     {
                         deltaAS300.YY[1] = false;
-                        //await Task.Delay(1000);
+                        await Task.Delay(1000);
                         //AOIActioncallback("");
                         aOICCD.Action(AOIActioncallback);
+                    }
+                    else
+                    {
+                        deltaAS300.YY[1] = false;
+                    }
+                }
+            }
+        }
+        private async void Runloop()
+        {
+            while (true)
+            {
+                await Task.Delay(1000);
+                using (var releaser = await m_lock1.LockAsync())
+                {
+                    _hObjectList.Clear();
+
+                    hObjectList = null;
+
+                    
+                    int r = await camera.RunAction();
+                    CameraResult = r == 1 ? "OK" : "NG";
+                    if (_hObjectList.Count > 0)
+                    {
+                        hObjectList = _hObjectList;
                     }
                 }
             }
@@ -276,6 +363,7 @@ namespace OmicronforAutoSteel.ViewModel
                 Robot2Connect = TestSendPortStatus1 && TestRevPortStatus1 && MsgRevPortStatus1 && CtrlPortStatus1;
                 AOICameraConnect = AOISoftwarePortStatus;
                 IsRobotReady = Robot1Connect && Robot2Connect;
+                USBCameraConnect = camera.status;
             }
  
         }

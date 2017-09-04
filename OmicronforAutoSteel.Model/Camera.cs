@@ -11,19 +11,65 @@ namespace OmicronforAutoSteel.Model
     public class Camera
     {
         public HImage himage;
-        private bool status = false;
+        public bool status = false;
         // Local iconic variables 
-        HObject ho_Image;
+
+        HObject ho_Image, ho_GrayImage, ho_Rectangle;
+        HObject ho_ImageReduced, ho_Model, ho_ModelTrans, ho_ImageSearch;
+        HObject ho_GrayImageSearch;
+
+
         // Local control variables 
+
         HTuple hv_AcqHandle;
+        HTuple hv_ModelID, hv_Area, hv_RowRef, hv_ColumnRef, hv_HomMat2D;
+        HTuple hv_Row, hv_Column, hv_Angle, hv_Scale, hv_Score;
+        HTuple hv_I, hv_HomMat2DIdentity = new HTuple(), hv_HomMat2DTranslate = new HTuple();
+        HTuple hv_HomMat2DRotate = new HTuple(), hv_HomMat2DScale = new HTuple();
+
+
 
         public delegate void PrintEventHandler();
         public event PrintEventHandler ImageChanged;
+        public delegate void TranEventHandler(HObject ht);
+        public event TranEventHandler FindChanged;
 
         public Camera()
         {
             // Initialize local and output iconic variables 
             HOperatorSet.GenEmptyObj(out ho_Image);
+            HOperatorSet.GenEmptyObj(out ho_GrayImage);
+            HOperatorSet.GenEmptyObj(out ho_Rectangle);
+            HOperatorSet.GenEmptyObj(out ho_ImageReduced);
+            HOperatorSet.GenEmptyObj(out ho_Model);
+            HOperatorSet.GenEmptyObj(out ho_ModelTrans);
+            HOperatorSet.GenEmptyObj(out ho_ImageSearch);
+            HOperatorSet.GenEmptyObj(out ho_GrayImageSearch);
+
+
+        }
+        public void CreatModel()
+        {
+            ho_Image.Dispose();
+            HOperatorSet.ReadImage(out ho_Image, System.Environment.CurrentDirectory + "\\p.bmp");
+            ho_GrayImage.Dispose();
+            HOperatorSet.Rgb1ToGray(ho_Image, out ho_GrayImage);
+            himage = HObjectToHImage(ho_GrayImage);
+            ImageChanged();
+            ho_Rectangle.Dispose();
+            HOperatorSet.GenRectangle1(out ho_Rectangle, 123, 366, 219, 474);
+            ho_ImageReduced.Dispose();
+            HOperatorSet.ReduceDomain(ho_GrayImage, ho_Rectangle, out ho_ImageReduced);
+            HOperatorSet.CreateScaledShapeModel(ho_ImageReduced, 5, (new HTuple(-45)).TupleRad()
+                , (new HTuple(90)).TupleRad(), "auto", 0.8, 1.0, "auto", "none", "ignore_global_polarity",
+                40, 10, out hv_ModelID);
+            ho_Model.Dispose();
+            HOperatorSet.GetShapeModelContours(out ho_Model, hv_ModelID, 1);
+            HOperatorSet.AreaCenter(ho_Rectangle, out hv_Area, out hv_RowRef, out hv_ColumnRef);
+            HOperatorSet.VectorAngleToRigid(0, 0, 0, hv_RowRef, hv_ColumnRef, 0, out hv_HomMat2D);
+            ho_ModelTrans.Dispose();
+            HOperatorSet.AffineTransContourXld(ho_Model, out ho_ModelTrans, hv_HomMat2D);
+            FindChanged(ho_ModelTrans);
         }
         public bool OpenDevice()
         {
@@ -32,9 +78,11 @@ namespace OmicronforAutoSteel.Model
             try
             {
                 HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "rgb",
-    -1, "false", "default", "Integrated Camera", 0, -1, out hv_AcqHandle);
+    -1, "false", "default", "PC Cam", 0, -1, out hv_AcqHandle);
                 //Integrated Camera
                 //HD USB Camera
+                HOperatorSet.SetFramegrabberParam(hv_AcqHandle, "frame_rate", 7.5);
+                HOperatorSet.SetFramegrabberParam(hv_AcqHandle, "disconnect_graph", "false");
                 r = true;
                 status = true;
             }
@@ -47,27 +95,74 @@ namespace OmicronforAutoSteel.Model
             return r;
 
         }
-        public async Task<bool> Action()
+        public Task<int> RunAction()
         {
-            await ((Func<Task>)(() =>
+            return Task<int>.Run(() =>
             {
-                return Task.Run(() =>
+               return Action();
+            });
+        }
+        public int Action()
+        {
+            int r = 0;
+
+            try
+            {
+                ho_Image.Dispose();
+                HOperatorSet.GrabImage(out ho_ImageSearch, hv_AcqHandle);
+                ho_GrayImageSearch.Dispose();
+                HOperatorSet.Rgb1ToGray(ho_ImageSearch, out ho_GrayImageSearch);
+                himage = HObjectToHImage(ho_GrayImageSearch);
+                ImageChanged();
+                HOperatorSet.FindScaledShapeModel(ho_GrayImageSearch, hv_ModelID, (new HTuple(-45)).TupleRad()
+        , (new HTuple(90)).TupleRad(), 0.8, 1.0, 0.5, 0, 0.5, "least_squares", 5,
+        0.8, out hv_Row, out hv_Column, out hv_Angle, out hv_Scale, out hv_Score);
+                for (hv_I = 0; (int)hv_I <= (int)((new HTuple(hv_Score.TupleLength())) - 1); hv_I = (int)hv_I + 1)
                 {
-                    if (status)
-                    {
-                        ho_Image.Dispose();
-                        HOperatorSet.GrabImage(out ho_Image, hv_AcqHandle);
-                        himage = HObjectToHImage(ho_Image);
-                        ImageChanged();
-                    }
-                });
-            }))();
-            return true;
+                    HOperatorSet.HomMat2dIdentity(out hv_HomMat2DIdentity);
+                    HOperatorSet.HomMat2dTranslate(hv_HomMat2DIdentity, hv_Row.TupleSelect(hv_I),
+                        hv_Column.TupleSelect(hv_I), out hv_HomMat2DTranslate);
+                    HOperatorSet.HomMat2dRotate(hv_HomMat2DTranslate, hv_Angle.TupleSelect(hv_I),
+                        hv_Row.TupleSelect(hv_I), hv_Column.TupleSelect(hv_I), out hv_HomMat2DRotate);
+                    HOperatorSet.HomMat2dScale(hv_HomMat2DRotate, hv_Scale.TupleSelect(hv_I), hv_Scale.TupleSelect(
+                        hv_I), hv_Row.TupleSelect(hv_I), hv_Column.TupleSelect(hv_I), out hv_HomMat2DScale);
+                    ho_ModelTrans.Dispose();
+                    HOperatorSet.AffineTransContourXld(ho_Model, out ho_ModelTrans, hv_HomMat2DScale);
+                    FindChanged(ho_ModelTrans);
+                }
+                if (hv_I.I > 0)
+                {
+                    //FindChanged();
+                    r = 1;
+                }
+                else
+                {
+                    r = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                r = -1;
+                CloseDevice();
+                OpenDevice();
+                Log.Default.Error("Camera.Action", ex.Message);
+            }
+
+    
+            return r;
         }
         public void CloseDevice()
         {
             status = false;
-            HOperatorSet.CloseFramegrabber(hv_AcqHandle);
+            try
+            {
+                HOperatorSet.CloseFramegrabber(hv_AcqHandle);
+            }
+            catch
+            {
+
+            }
+            
         }
         private HImage HObjectToHImage(HObject hObject)
         {
