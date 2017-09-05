@@ -196,6 +196,32 @@ namespace OmicronforAutoSteel.ViewModel
                 Log.Default.Error("MainDataContext.AOIActioncallback", ex.Message);
             }
         }
+        private async void USBCameraPLCAction()
+        {
+            _hObjectList.Clear();
+            hObjectList = null;
+            int tt;
+            await Task.Run(async () =>
+            {
+                using (var releaser = await m_lock1.LockAsync())
+                {
+                    tt = await camera.RunAction();
+                    while (tt != 1 && !deltaAS300.XX[40])
+                    {
+                        _hObjectList.Clear();
+                        tt = await camera.RunAction();
+                        await Task.Delay(10);
+                    }
+                    if (_hObjectList.Count > 0)
+                    {
+                        hObjectList = _hObjectList;
+                        await Task.Delay(200);
+                        deltaAS300.YY[0] = true;
+                    }
+
+                }
+            });
+        }
         private async void PLCRun()
         {
             bool XX0 = false, XX1 = false;
@@ -208,27 +234,9 @@ namespace OmicronforAutoSteel.ViewModel
                     if (XX0)
                     {
                         deltaAS300.YY[0] = false;
-                        //deltaAS300.YY[28] = camera.Action();
-                        _hObjectList.Clear();
-                        hObjectList = null;
-                        int tt = 0;
-                        using (var releaser = await m_lock1.LockAsync())
-                        {
-                            tt = await camera.RunAction();
-                            if (tt == -1)
-                            {
-                                _hObjectList.Clear();
-                                tt = await camera.RunAction();
-                            }
-                        }
-                        deltaAS300.YY[28] = tt == 1;
-                        
-                        if (_hObjectList.Count > 0)
-                        {
-                            hObjectList = _hObjectList;
-                        }
-                        await Task.Delay(200);
-                        deltaAS300.YY[0] = true;
+
+                        USBCameraPLCAction();
+
                     }
                     else
                     {
