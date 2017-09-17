@@ -24,6 +24,7 @@ namespace OmicronforAutoSteel.Model
         public TcpIpClient CtrlNet = new TcpIpClient();
         private bool isLogined = false;
         public readonly AsyncLock m_lock1 = new AsyncLock();
+        public readonly AsyncLock m_lock2 = new AsyncLock();
         #endregion
         #region 事件
         public delegate void PrintEventHandler(string ModelMessageStr);
@@ -371,6 +372,7 @@ namespace OmicronforAutoSteel.Model
         public TcpIpClient CtrlNet = new TcpIpClient();
         private bool isLogined = false;
         public readonly AsyncLock m_lock1 = new AsyncLock();
+        public readonly AsyncLock m_lock2 = new AsyncLock();
         #endregion
         #region 事件
         public delegate void PrintEventHandler(string ModelMessageStr);

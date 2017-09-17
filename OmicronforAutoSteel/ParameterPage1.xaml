@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="OmicronforAutoSteel.ParameterPage1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:control="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:mvvm="clr-namespace:BingLibrary.hjb;assembly=BingLibrary"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OmicronforAutoSteel"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/Icons.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="机械手1参数">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">X Offset:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R1XOffset1}"></TextBox>
+                    <Button Content="更新" Margin="10,0,0,0" Command="{mvvm:ActionAutoWithParam UpdateCameraData}" CommandParameter="1"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Y Offset:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R1YOffset1}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">U Offset:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R1UOffset1}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="机械手2参数">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">X Offset1:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2XOffset1}"></TextBox>
+                    <Button Content="更新" Margin="10,0,0,0" Command="{mvvm:ActionAutoWithParam UpdateCameraData}" CommandParameter="2"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Y Offset1:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2YOffset1}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">U Offset1:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2UOffset1}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">X Offset2:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2XOffset2}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Y Offset2:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2YOffset2}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">U Offset2:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2UOffset2}"></TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">X Offset3:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2XOffset3}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Y Offset3:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2YOffset3}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">U Offset3:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2UOffset3}"></TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">X Offset4:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2XOffset4}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Y Offset4:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2YOffset4}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">U Offset4:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2UOffset4}"></TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">X Offset5:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2XOffset5}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">Y Offset5:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2YOffset5}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ParameterHorizontalStackPanel}">
+                    <TextBlock Style="{StaticResource TextBlockParameterLoneName}">U Offset5:</TextBlock>
+                    <TextBox Style="{StaticResource TextBoxPort}" Text="{Binding R2UOffset5}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

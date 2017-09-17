@@ -25,12 +25,16 @@
         </Grid.RowDefinitions>
         <Menu VerticalAlignment="Center">
             <MenuItem Header="主页" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="0"></MenuItem>
-            <MenuItem Header="参数" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="1"></MenuItem>
+            <MenuItem Header="参数" Style="{StaticResource MenuItem1}">
+                <MenuItem Header="IP" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="1"></MenuItem>
+                <MenuItem Header="补偿" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="3"></MenuItem>
+            </MenuItem>
             <MenuItem Header="相机" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="2"></MenuItem>
         </Menu>
         <local:HomePage Grid.Row="1" Visibility="{Binding HomePageVisibility,FallbackValue=Visible}"></local:HomePage>
         <local:ParameterPage Grid.Row="1" Visibility="{Binding ParameterPageVisibility,FallbackValue=Collapsed}"></local:ParameterPage>
         <local:CameraPage Grid.Row="1" Visibility="{Binding CameraPageVisibility,FallbackValue=Collapsed}"></local:CameraPage>
+        <local:ParameterPage1 Grid.Row="1" Visibility="{Binding ParameterPage1Visibility,FallbackValue=Collapsed}"></local:ParameterPage1>
         <StatusBar Grid.Row="2">
             <StatusBarItem>
                 <TextBlock>PLC</TextBlock>

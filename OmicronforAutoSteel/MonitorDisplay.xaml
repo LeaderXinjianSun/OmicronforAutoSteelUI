@@ -10,5 +10,17 @@
         <Grid.Background>
             <ImageBrush ImageSource="pictures/自动贴钢片机俯视图.png"></ImageBrush>
         </Grid.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="2" Visibility="{Binding AlarmGridVisibility}" Background="Red">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="{Binding AlarmTextString}"></TextBlock>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
