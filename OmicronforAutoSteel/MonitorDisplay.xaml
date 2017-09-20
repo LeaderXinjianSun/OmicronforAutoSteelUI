@@ -10,7 +10,16 @@
         <Grid.Background>
             <ImageBrush ImageSource="pictures/自动贴钢片机俯视图.png"></ImageBrush>
         </Grid.Background>
-        <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock Background="Red" HorizontalAlignment="Stretch" Visibility="{Binding AlarmGridVisibility}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="{Binding AlarmTextString}"></TextBlock>
+            <TextBlock Background="Red" Visibility="{Binding AlarmString1}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="等待PCB板上料篮"></TextBlock>
+            <TextBlock Background="Red" Visibility="{Binding AlarmString2}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="等待胶上料"></TextBlock>
+            <TextBlock Background="Red" Visibility="{Binding AlarmString3}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="等待钢片上料"></TextBlock>
+            <TextBlock Background="Red" Visibility="{Binding AlarmString4}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="等待钢片空盘取走"></TextBlock>
+            <TextBlock Background="Red" Visibility="{Binding AlarmString5}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="等待PCB板下料篮"></TextBlock>
+            <TextBlock Background="Red" Visibility="{Binding AlarmString6}" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="产量到达设定值"></TextBlock>
+        </StackPanel>
+        <!--<Grid>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -19,8 +28,8 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="2" Visibility="{Binding AlarmGridVisibility}" Background="Red">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Foreground="White" Text="{Binding AlarmTextString}"></TextBlock>
+                
             </Grid>
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

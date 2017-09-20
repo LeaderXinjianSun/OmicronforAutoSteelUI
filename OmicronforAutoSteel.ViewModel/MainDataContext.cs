@@ -42,6 +42,13 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual string CameraPageVisibility { set; get; } = "Collapsed";
         public virtual string ParameterPage1Visibility { set; get; } = "Collapsed";
         public virtual string AlarmGridVisibility { set; get; } = "Collapsed";
+        public virtual string HelpPageVisibility { set; get; } = "Collapsed";
+        public virtual string AlarmString1 { set; get; } = "Collapsed";
+        public virtual string AlarmString2 { set; get; } = "Collapsed";
+        public virtual string AlarmString3 { set; get; } = "Collapsed";
+        public virtual string AlarmString4 { set; get; } = "Collapsed";
+        public virtual string AlarmString5 { set; get; } = "Collapsed";
+        public virtual string AlarmString6 { set; get; } = "Collapsed";
         public virtual string EpsonIp { set; get; }
         public virtual int EpsonTestSendPort { set; get; }
         public virtual int EpsonTestReceivePort { set; get; }
@@ -97,6 +104,7 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual double R2YOffset5 { set; get; }
         public virtual double R2UOffset5 { set; get; }
         public virtual string AlarmTextString { set; get; }
+        public virtual bool IsLogin { set; get; } = false;
         #endregion
         #region 变量
         private string MessageStr = "";
@@ -105,6 +113,7 @@ namespace OmicronforAutoSteel.ViewModel
         private string iniParameterPath = System.Environment.CurrentDirectory + "\\Parameter.ini";
         private string iniCameraDataPath = System.Environment.CurrentDirectory + "\\CameraData.ini";
         private Camera camera = new Camera();
+        //private Camera camera;
         private DeltaAS300 deltaAS300;
         private AOICCD aOICCD;
         private dialog mydialog = new dialog();
@@ -133,10 +142,10 @@ namespace OmicronforAutoSteel.ViewModel
             ReadParameter();
             UpdateUI();
             CameraInit();
-            
+
             PLCRun();
             Runloop();
-            
+
         }
         #endregion
         #region 测试Function
@@ -311,6 +320,7 @@ namespace OmicronforAutoSteel.ViewModel
         private async void PLCRun()
         {
             bool XX0 = false, XX1 = false;
+            bool XX10 = false, XX11 = false, XX12 = false, XX13 = false, XX14 = false, XX15 = false, XX16 = false,XX17 = false;
             while (true)
             {
                 await Task.Delay(100);
@@ -342,6 +352,104 @@ namespace OmicronforAutoSteel.ViewModel
                     else
                     {
                         deltaAS300.YY[1] = false;
+                    }
+                }
+                if (XX10 != deltaAS300.XX[10])
+                {
+                    XX10 = deltaAS300.XX[10];
+                    if (XX10)
+                    {
+                        AlarmString1 = "Visible";
+                    }
+                    else
+                    {
+                        AlarmString1 = "Collapsed";
+                    }
+                }
+                if (XX11 != deltaAS300.XX[11])
+                {
+                    XX11 = deltaAS300.XX[11];
+                    if (XX11)
+                    {
+                        AlarmString2 = "Visible";
+                    }
+                    else
+                    {
+                        AlarmString2 = "Collapsed";
+                    }
+                }
+                if (XX12 != deltaAS300.XX[12])
+                {
+                    XX12 = deltaAS300.XX[12];
+                    if (XX12)
+                    {
+                        AlarmString3 = "Visible";
+                    }
+                    else
+                    {
+                        AlarmString3 = "Collapsed";
+                    }
+                }
+                if (XX13 != deltaAS300.XX[13])
+                {
+                    XX13 = deltaAS300.XX[13];
+                    if (XX13)
+                    {
+                        AlarmString4 = "Visible";
+                    }
+                    else
+                    {
+                        AlarmString4 = "Collapsed";
+                    }
+                }
+                if (XX14 != deltaAS300.XX[14])
+                {
+                    XX14 = deltaAS300.XX[14];
+                    if (XX14)
+                    {
+                        AlarmString5 = "Visible";
+                    }
+                    else
+                    {
+                        AlarmString5 = "Collapsed";
+                    }
+                }
+                if (XX15 != deltaAS300.XX[15])
+                {
+                    XX15 = deltaAS300.XX[15];
+                    if (XX15)
+                    {
+                        AlarmString3 = "Visible";
+                    }
+                    
+                }
+                if (XX16 != deltaAS300.XX[16])
+                {
+                    XX16 = deltaAS300.XX[16];
+                    if (XX16)
+                    {
+                        AlarmString4 = "Visible";
+                    }
+                    
+                }
+                if (!XX12 && !XX15)
+                {
+                    AlarmString3 = "Collapsed";
+                }
+                if (!XX13 && !XX16)
+                {
+                    AlarmString4 = "Collapsed";
+                }
+                if (XX17 != deltaAS300.XX[17])
+                {
+                    XX17 = deltaAS300.XX[17];
+                    if (XX17)
+                    {
+                        AlarmString6 = "Visible";
+                    }
+                    else
+                    {
+                        AlarmString6 = "Collapsed";
                     }
                 }
             }
@@ -431,27 +539,56 @@ namespace OmicronforAutoSteel.ViewModel
                     ParameterPageVisibility = "Collapsed";
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Collapsed";
+                    HelpPageVisibility = "Collapsed";
+                    IsLogin = false;
                     break;
                 case "1":
                     HomePageVisibility = "Collapsed";
                     ParameterPageVisibility = "Visible";
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Collapsed";
+                    HelpPageVisibility = "Collapsed";
                     break;
                 case "2":
                     HomePageVisibility = "Collapsed";
                     ParameterPageVisibility = "Collapsed";
                     CameraPageVisibility = "Visible";
                     ParameterPage1Visibility = "Collapsed";
+                    HelpPageVisibility = "Collapsed";
+                    IsLogin = false;
                     break;
                 case "3":
                     HomePageVisibility = "Collapsed";
                     ParameterPageVisibility = "Collapsed";
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Visible";
+                    HelpPageVisibility = "Collapsed";
+                    break;
+                case "4":
+                    LoginAciton();
+                    break;
+                case "5":
+                    HelpPageVisibility = "Visible";
+                    HomePageVisibility = "Collapsed";
+                    ParameterPageVisibility = "Collapsed";
+                    CameraPageVisibility = "Collapsed";
+                    ParameterPage1Visibility = "Collapsed";
+                    IsLogin = false;
                     break;
                 default:
                     break;
+            }
+        }
+        private async void LoginAciton()
+        {
+            List<string> r;
+            if (!IsLogin)
+            {
+                r = await mydialog.showlogin();
+                if (r[1] == "ABCD4321")
+                {
+                    IsLogin = true;
+                }
             }
         }
         /// <summary>
@@ -551,6 +688,15 @@ namespace OmicronforAutoSteel.ViewModel
         private void Robot2PrintEventProcess(string str)
         {
             MsgText = AddMessage(str);
+            switch (str)
+            {
+                case "MsgRev: 拍照失败":
+                    ShowAlarmText("钢片拍照失败");
+                    break;
+                
+                default:
+                    break;
+            }
         }
         private void Robot1StatusUpdateProcess(string str)
         {

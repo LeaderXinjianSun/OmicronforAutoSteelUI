@@ -37,6 +37,15 @@ namespace OmicronforAutoSteel.Model
         public Camera()
         {
             // Initialize local and output iconic variables 
+            //HOperatorSet.GenEmptyObj(out ho_Image);
+            //HOperatorSet.GenEmptyObj(out ho_GrayImage);
+            //HOperatorSet.GenEmptyObj(out ho_Rectangle);
+            //HOperatorSet.GenEmptyObj(out ho_ImageReduced);
+            //HOperatorSet.GenEmptyObj(out ho_Model);
+            //HOperatorSet.GenEmptyObj(out ho_ModelTrans);
+            //HOperatorSet.GenEmptyObj(out ho_ImageSearch);
+            //HOperatorSet.GenEmptyObj(out ho_GrayImageSearch);
+
             HOperatorSet.GenEmptyObj(out ho_Image);
             HOperatorSet.GenEmptyObj(out ho_GrayImage);
             HOperatorSet.GenEmptyObj(out ho_Rectangle);
