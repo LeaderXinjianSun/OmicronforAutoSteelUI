@@ -82,7 +82,13 @@ namespace BingLibrary.hjb
         {
             try
             {
+                byte[] data = new Byte[256];
+                
                 stream = client.GetStream();
+                while (stream.DataAvailable)
+                {
+                    stream.Read(data, 0, data.Length);
+                }
                 await stream.WriteAsync(Encoding.ASCII.GetBytes(message + "\r\n"), 0, Encoding.ASCII.GetBytes(message + "\r\n").Length);
 
                 return "";

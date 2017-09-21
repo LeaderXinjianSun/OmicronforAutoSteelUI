@@ -41,6 +41,8 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual string ParameterPageVisibility { set; get; } = "Collapsed";
         public virtual string CameraPageVisibility { set; get; } = "Collapsed";
         public virtual string ParameterPage1Visibility { set; get; } = "Collapsed";
+        public virtual string ParameterPage2Visibility { set; get; } = "Collapsed";
+        public virtual string ParameterPage3Visibility { set; get; } = "Collapsed";
         public virtual string AlarmGridVisibility { set; get; } = "Collapsed";
         public virtual string HelpPageVisibility { set; get; } = "Collapsed";
         public virtual string AlarmString1 { set; get; } = "Collapsed";
@@ -103,6 +105,71 @@ namespace OmicronforAutoSteel.ViewModel
         public virtual double R2XOffset5 { set; get; }
         public virtual double R2YOffset5 { set; get; }
         public virtual double R2UOffset5 { set; get; }
+
+        public virtual double R2XOffset1_2 { set; get; }
+        public virtual double R2YOffset1_2 { set; get; }
+        public virtual double R2UOffset1_2 { set; get; }
+        public virtual double R2XOffset2_2 { set; get; }
+        public virtual double R2YOffset2_2 { set; get; }
+        public virtual double R2UOffset2_2 { set; get; }
+        public virtual double R2XOffset3_2 { set; get; }
+        public virtual double R2YOffset3_2 { set; get; }
+        public virtual double R2UOffset3_2 { set; get; }
+        public virtual double R2XOffset4_2 { set; get; }
+        public virtual double R2YOffset4_2 { set; get; }
+        public virtual double R2UOffset4_2 { set; get; }
+        public virtual double R2XOffset5_2 { set; get; }
+        public virtual double R2YOffset5_2 { set; get; }
+        public virtual double R2UOffset5_2 { set; get; }
+
+        public virtual double R2XOffset1_3 { set; get; }
+        public virtual double R2YOffset1_3 { set; get; }
+        public virtual double R2UOffset1_3 { set; get; }
+        public virtual double R2XOffset2_3 { set; get; }
+        public virtual double R2YOffset2_3 { set; get; }
+        public virtual double R2UOffset2_3 { set; get; }
+        public virtual double R2XOffset3_3 { set; get; }
+        public virtual double R2YOffset3_3 { set; get; }
+        public virtual double R2UOffset3_3 { set; get; }
+        public virtual double R2XOffset4_3 { set; get; }
+        public virtual double R2YOffset4_3 { set; get; }
+        public virtual double R2UOffset4_3 { set; get; }
+        public virtual double R2XOffset5_3 { set; get; }
+        public virtual double R2YOffset5_3 { set; get; }
+        public virtual double R2UOffset5_3 { set; get; }
+
+        public virtual double R2XOffset1_4 { set; get; }
+        public virtual double R2YOffset1_4 { set; get; }
+        public virtual double R2UOffset1_4 { set; get; }
+        public virtual double R2XOffset2_4 { set; get; }
+        public virtual double R2YOffset2_4 { set; get; }
+        public virtual double R2UOffset2_4 { set; get; }
+        public virtual double R2XOffset3_4 { set; get; }
+        public virtual double R2YOffset3_4 { set; get; }
+        public virtual double R2UOffset3_4 { set; get; }
+        public virtual double R2XOffset4_4 { set; get; }
+        public virtual double R2YOffset4_4 { set; get; }
+        public virtual double R2UOffset4_4 { set; get; }
+        public virtual double R2XOffset5_4 { set; get; }
+        public virtual double R2YOffset5_4 { set; get; }
+        public virtual double R2UOffset5_4 { set; get; }
+
+        public virtual double R2XOffset1_5 { set; get; }
+        public virtual double R2YOffset1_5 { set; get; }
+        public virtual double R2UOffset1_5 { set; get; }
+        public virtual double R2XOffset2_5 { set; get; }
+        public virtual double R2YOffset2_5 { set; get; }
+        public virtual double R2UOffset2_5 { set; get; }
+        public virtual double R2XOffset3_5 { set; get; }
+        public virtual double R2YOffset3_5 { set; get; }
+        public virtual double R2UOffset3_5 { set; get; }
+        public virtual double R2XOffset4_5 { set; get; }
+        public virtual double R2YOffset4_5 { set; get; }
+        public virtual double R2UOffset4_5 { set; get; }
+        public virtual double R2XOffset5_5 { set; get; }
+        public virtual double R2YOffset5_5 { set; get; }
+        public virtual double R2UOffset5_5 { set; get; }
+
         public virtual string AlarmTextString { set; get; }
         public virtual bool IsLogin { set; get; } = false;
         #endregion
@@ -208,10 +275,138 @@ namespace OmicronforAutoSteel.ViewModel
                     {
                         if (robot2.TestSentNet.tcpConnected)
                         {
-                            await robot2.TestSentNet.SendAsync("R2Offset;" + R2XOffset1.ToString() + ";" + R2XOffset2.ToString() + ";" + R2XOffset3.ToString() + ";" + R2XOffset4.ToString() + ";" + R2XOffset5.ToString() + ";"
+                            await robot2.TestSentNet.SendAsync("R2Offset1;" + R2XOffset1.ToString() + ";" + R2XOffset2.ToString() + ";" + R2XOffset3.ToString() + ";" + R2XOffset4.ToString() + ";" + R2XOffset5.ToString() + ";"
                                 + R2YOffset1.ToString() + ";" + R2YOffset2.ToString() + ";" + R2YOffset3.ToString() + ";" + R2YOffset4.ToString() + ";" + R2YOffset5.ToString() + ";"
                                 + R2UOffset1.ToString() + ";" + R2UOffset2.ToString() + ";" + R2UOffset3.ToString() + ";" + R2UOffset4.ToString() + ";" + R2UOffset5.ToString());
-                            MsgText = AddMessage("更新机械手2偏移量");
+                            MsgText = AddMessage("更新机械手2_1偏移量");
+                        }
+                    }
+                    break;
+                case "3":
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset1_2", R2XOffset1_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset1_2", R2YOffset1_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset1_2", R2UOffset1_2.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset2_2", R2XOffset2_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset2_2", R2YOffset2_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset2_2", R2UOffset2_2.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset3_2", R2XOffset3_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset3_2", R2YOffset3_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset3_2", R2UOffset3_2.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset4_2", R2XOffset4_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset4_2", R2YOffset4_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset4_2", R2UOffset4_2.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset5_2", R2XOffset5_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset5_2", R2YOffset5_2.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset5_2", R2UOffset5_2.ToString());
+
+                    using (var releaser = await robot2.m_lock2.LockAsync())
+                    {
+                        if (robot2.TestSentNet.tcpConnected)
+                        {
+                            await robot2.TestSentNet.SendAsync("R2Offset2;" + R2XOffset1_2.ToString() + ";" + R2XOffset2_2.ToString() + ";" + R2XOffset3_2.ToString() + ";" + R2XOffset4_2.ToString() + ";" + R2XOffset5_2.ToString() + ";"
+                                + R2YOffset1_2.ToString() + ";" + R2YOffset2_2.ToString() + ";" + R2YOffset3_2.ToString() + ";" + R2YOffset4_2.ToString() + ";" + R2YOffset5_2.ToString() + ";"
+                                + R2UOffset1_2.ToString() + ";" + R2UOffset2_2.ToString() + ";" + R2UOffset3_2.ToString() + ";" + R2UOffset4_2.ToString() + ";" + R2UOffset5_2.ToString());
+                            MsgText = AddMessage("更新机械手2_2偏移量");
+                        }
+                    }
+                    break;
+                case "4":
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset1_3", R2XOffset1_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset1_3", R2YOffset1_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset1_3", R2UOffset1_3.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset2_3", R2XOffset2_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset2_3", R2YOffset2_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset2_3", R2UOffset2_3.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset3_3", R2XOffset3_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset3_3", R2YOffset3_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset3_3", R2UOffset3_3.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset4_3", R2XOffset4_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset4_3", R2YOffset4_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset4_3", R2UOffset4_3.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset5_3", R2XOffset5_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset5_3", R2YOffset5_3.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset5_3", R2UOffset5_3.ToString());
+
+                    using (var releaser = await robot2.m_lock2.LockAsync())
+                    {
+                        if (robot2.TestSentNet.tcpConnected)
+                        {
+                            await robot2.TestSentNet.SendAsync("R2Offset3;" + R2XOffset1_3.ToString() + ";" + R2XOffset2_3.ToString() + ";" + R2XOffset3_3.ToString() + ";" + R2XOffset4_3.ToString() + ";" + R2XOffset5_3.ToString() + ";"
+                                + R2YOffset1_3.ToString() + ";" + R2YOffset2_3.ToString() + ";" + R2YOffset3_3.ToString() + ";" + R2YOffset4_3.ToString() + ";" + R2YOffset5_3.ToString() + ";"
+                                + R2UOffset1_3.ToString() + ";" + R2UOffset2_3.ToString() + ";" + R2UOffset3_3.ToString() + ";" + R2UOffset4_3.ToString() + ";" + R2UOffset5_3.ToString());
+                            MsgText = AddMessage("更新机械手2_3偏移量");
+                        }
+                    }
+                    break;
+                case "5":
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset1_4", R2XOffset1_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset1_4", R2YOffset1_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset1_4", R2UOffset1_4.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset2_4", R2XOffset2_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset2_4", R2YOffset2_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset2_4", R2UOffset2_4.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset3_4", R2XOffset3_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset3_4", R2YOffset3_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset3_4", R2UOffset3_4.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset4_4", R2XOffset4_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset4_4", R2YOffset4_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset4_4", R2UOffset4_4.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset5_4", R2XOffset5_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset5_4", R2YOffset5_4.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset5_4", R2UOffset5_4.ToString());
+
+                    using (var releaser = await robot2.m_lock2.LockAsync())
+                    {
+                        if (robot2.TestSentNet.tcpConnected)
+                        {
+                            await robot2.TestSentNet.SendAsync("R2Offset4;" + R2XOffset1_4.ToString() + ";" + R2XOffset2_4.ToString() + ";" + R2XOffset3_4.ToString() + ";" + R2XOffset4_4.ToString() + ";" + R2XOffset5_4.ToString() + ";"
+                                + R2YOffset1_4.ToString() + ";" + R2YOffset2_4.ToString() + ";" + R2YOffset3_4.ToString() + ";" + R2YOffset4_4.ToString() + ";" + R2YOffset5_4.ToString() + ";"
+                                + R2UOffset1_4.ToString() + ";" + R2UOffset2_4.ToString() + ";" + R2UOffset3_4.ToString() + ";" + R2UOffset4_4.ToString() + ";" + R2UOffset5_4.ToString());
+                            MsgText = AddMessage("更新机械手2_4偏移量");
+                        }
+                    }
+                    break;
+                case "6":
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset1_5", R2XOffset1_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset1_5", R2YOffset1_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset1_5", R2UOffset1_5.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset2_5", R2XOffset2_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset2_5", R2YOffset2_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset2_5", R2UOffset2_5.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset3_5", R2XOffset3_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset3_5", R2YOffset3_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset3_5", R2UOffset3_5.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset4_5", R2XOffset4_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset4_5", R2YOffset4_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset4_5", R2UOffset4_5.ToString());
+
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2XOffset5_5", R2XOffset5_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2YOffset5_5", R2YOffset5_5.ToString());
+                    Inifile.INIWriteValue(iniCameraDataPath, "R2", "R2UOffset5_5", R2UOffset5_5.ToString());
+
+                    using (var releaser = await robot2.m_lock2.LockAsync())
+                    {
+                        if (robot2.TestSentNet.tcpConnected)
+                        {
+                            await robot2.TestSentNet.SendAsync("R2Offset5;" + R2XOffset1_5.ToString() + ";" + R2XOffset2_5.ToString() + ";" + R2XOffset3_5.ToString() + ";" + R2XOffset4_5.ToString() + ";" + R2XOffset5_5.ToString() + ";"
+                                + R2YOffset1_5.ToString() + ";" + R2YOffset2_5.ToString() + ";" + R2YOffset3_5.ToString() + ";" + R2YOffset4_5.ToString() + ";" + R2YOffset5_5.ToString() + ";"
+                                + R2UOffset1_5.ToString() + ";" + R2UOffset2_5.ToString() + ";" + R2UOffset3_5.ToString() + ";" + R2UOffset4_5.ToString() + ";" + R2UOffset5_5.ToString());
+                            MsgText = AddMessage("更新机械手2_5偏移量");
                         }
                     }
                     break;
@@ -280,7 +475,7 @@ namespace OmicronforAutoSteel.ViewModel
                     string[] strs = s.Split(';');
                     for (int i = 1; i < strs.Length; i++)
                     {
-                        deltaAS300.YY[int.Parse(strs[i]) + 1] = false;
+                        deltaAS300.YY[int.Parse(strs[i]) + 1] = true;
                     }
                 }
   
@@ -540,6 +735,8 @@ namespace OmicronforAutoSteel.ViewModel
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Collapsed";
                     HelpPageVisibility = "Collapsed";
+                    ParameterPage2Visibility = "Collapsed";
+                    ParameterPage3Visibility = "Collapsed";
                     IsLogin = false;
                     break;
                 case "1":
@@ -548,6 +745,8 @@ namespace OmicronforAutoSteel.ViewModel
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Collapsed";
                     HelpPageVisibility = "Collapsed";
+                    ParameterPage2Visibility = "Collapsed";
+                    ParameterPage3Visibility = "Collapsed";
                     break;
                 case "2":
                     HomePageVisibility = "Collapsed";
@@ -555,6 +754,8 @@ namespace OmicronforAutoSteel.ViewModel
                     CameraPageVisibility = "Visible";
                     ParameterPage1Visibility = "Collapsed";
                     HelpPageVisibility = "Collapsed";
+                    ParameterPage2Visibility = "Collapsed";
+                    ParameterPage3Visibility = "Collapsed";
                     IsLogin = false;
                     break;
                 case "3":
@@ -563,6 +764,8 @@ namespace OmicronforAutoSteel.ViewModel
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Visible";
                     HelpPageVisibility = "Collapsed";
+                    ParameterPage2Visibility = "Collapsed";
+                    ParameterPage3Visibility = "Collapsed";
                     break;
                 case "4":
                     LoginAciton();
@@ -573,7 +776,27 @@ namespace OmicronforAutoSteel.ViewModel
                     ParameterPageVisibility = "Collapsed";
                     CameraPageVisibility = "Collapsed";
                     ParameterPage1Visibility = "Collapsed";
+                    ParameterPage2Visibility = "Collapsed";
+                    ParameterPage3Visibility = "Collapsed";
                     IsLogin = false;
+                    break;
+                case "6":
+                    HomePageVisibility = "Collapsed";
+                    ParameterPageVisibility = "Collapsed";
+                    CameraPageVisibility = "Collapsed";
+                    ParameterPage1Visibility = "Collapsed";
+                    HelpPageVisibility = "Collapsed";
+                    ParameterPage2Visibility = "Visible";
+                    ParameterPage3Visibility = "Collapsed";
+                    break;
+                case "7":
+                    HomePageVisibility = "Collapsed";
+                    ParameterPageVisibility = "Collapsed";
+                    CameraPageVisibility = "Collapsed";
+                    ParameterPage1Visibility = "Collapsed";
+                    HelpPageVisibility = "Collapsed";
+                    ParameterPage2Visibility = "Collapsed";
+                    ParameterPage3Visibility = "Visible";
                     break;
                 default:
                     break;
@@ -794,6 +1017,87 @@ namespace OmicronforAutoSteel.ViewModel
                 R2XOffset5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset5", "0"));
                 R2YOffset5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset5", "0"));
                 R2UOffset5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset5", "0"));
+
+                R2XOffset1_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset1_2", "0"));
+                R2YOffset1_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset1_2", "0"));
+                R2UOffset1_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset1_2", "0"));
+
+                R2XOffset2_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset2_2", "0"));
+                R2YOffset2_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset2_2", "0"));
+                R2UOffset2_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset2_2", "0"));
+
+                R2XOffset3_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset3_2", "0"));
+                R2YOffset3_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset3_2", "0"));
+                R2UOffset3_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset3_2", "0"));
+
+                R2XOffset4_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset4_2", "0"));
+                R2YOffset4_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset4_2", "0"));
+                R2UOffset4_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset4_2", "0"));
+
+                R2XOffset5_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset5_2", "0"));
+                R2YOffset5_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset5_2", "0"));
+                R2UOffset5_2 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset5_2", "0"));
+
+                R2XOffset1_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset1_3", "0"));
+                R2YOffset1_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset1_3", "0"));
+                R2UOffset1_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset1_3", "0"));
+
+                R2XOffset2_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset2_3", "0"));
+                R2YOffset2_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset2_3", "0"));
+                R2UOffset2_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset2_3", "0"));
+
+                R2XOffset3_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset3_3", "0"));
+                R2YOffset3_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset3_3", "0"));
+                R2UOffset3_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset3_3", "0"));
+
+                R2XOffset4_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset4_3", "0"));
+                R2YOffset4_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset4_3", "0"));
+                R2UOffset4_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset4_3", "0"));
+
+                R2XOffset5_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset5_3", "0"));
+                R2YOffset5_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset5_3", "0"));
+                R2UOffset5_3 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset5_3", "0"));
+
+                R2XOffset1_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset1_4", "0"));
+                R2YOffset1_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset1_4", "0"));
+                R2UOffset1_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset1_4", "0"));
+
+                R2XOffset2_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset2_4", "0"));
+                R2YOffset2_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset2_4", "0"));
+                R2UOffset2_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset2_4", "0"));
+
+                R2XOffset3_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset3_4", "0"));
+                R2YOffset3_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset3_4", "0"));
+                R2UOffset3_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset3_4", "0"));
+
+                R2XOffset4_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset4_4", "0"));
+                R2YOffset4_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset4_4", "0"));
+                R2UOffset4_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset4_4", "0"));
+
+                R2XOffset5_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset5_4", "0"));
+                R2YOffset5_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset5_4", "0"));
+                R2UOffset5_4 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset5_4", "0"));
+
+                R2XOffset1_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset1_5", "0"));
+                R2YOffset1_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset1_5", "0"));
+                R2UOffset1_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset1_5", "0"));
+
+                R2XOffset2_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset2_5", "0"));
+                R2YOffset2_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset2_5", "0"));
+                R2UOffset2_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset2_5", "0"));
+
+                R2XOffset3_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset3_5", "0"));
+                R2YOffset3_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset3_5", "0"));
+                R2UOffset3_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset3_5", "0"));
+
+                R2XOffset4_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset4_5", "0"));
+                R2YOffset4_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset4_5", "0"));
+                R2UOffset4_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset4_5", "0"));
+
+                R2XOffset5_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2XOffset5_5", "0"));
+                R2YOffset5_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2YOffset5_5", "0"));
+                R2UOffset5_5 = double.Parse(Inifile.INIGetStringValue(iniCameraDataPath, "R2", "R2UOffset5_5", "0"));
+
                 MsgText = AddMessage("读取参数完成");
             }
             catch (Exception ex)

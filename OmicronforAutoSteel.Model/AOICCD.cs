@@ -87,7 +87,7 @@ namespace OmicronforAutoSteel.Model
                             try
                             {
                                 string[] strs = s.Split(';');
-                                if (strs.Length > 1 && strs[0] == "CMD" || s == "OK")
+                                if (strs.Length > 1 && strs[0] == "CMD" || s == "OK" || s == "ERROR")
                                 {
                                     callback(s);
                                     success = true;

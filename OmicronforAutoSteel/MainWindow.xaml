@@ -27,7 +27,9 @@
             <MenuItem Header="主页" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="0"></MenuItem>
             <MenuItem Header="参数" IsEnabled="{Binding IsLogin}" Style="{StaticResource MenuItem1}">
                 <MenuItem Header="IP" Style="{StaticResource MenuItem1}" IsEnabled="{Binding IsLogin}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="1"></MenuItem>
-                <MenuItem Header="补偿" IsEnabled="{Binding IsLogin}" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="3"></MenuItem>
+                <MenuItem Header="补偿1" IsEnabled="{Binding IsLogin}" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="3"></MenuItem>
+                <MenuItem Header="补偿2" IsEnabled="{Binding IsLogin}" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="6"></MenuItem>
+                <MenuItem Header="补偿3" IsEnabled="{Binding IsLogin}" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="7"></MenuItem>
             </MenuItem>
             <MenuItem Header="相机" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="2"></MenuItem>
             <MenuItem Header="帮助" Style="{StaticResource MenuItem1}" Command="{mvvm:ActionAutoWithParam ChoosePage}" CommandParameter="5"></MenuItem>
@@ -37,6 +39,8 @@
         <local:ParameterPage Grid.Row="1" Visibility="{Binding ParameterPageVisibility,FallbackValue=Collapsed}"></local:ParameterPage>
         <local:CameraPage Grid.Row="1" Visibility="{Binding CameraPageVisibility,FallbackValue=Collapsed}"></local:CameraPage>
         <local:ParameterPage1 Grid.Row="1" Visibility="{Binding ParameterPage1Visibility,FallbackValue=Collapsed}"></local:ParameterPage1>
+        <local:ParameterPage2 Grid.Row="1" Visibility="{Binding ParameterPage2Visibility,FallbackValue=Collapsed}"></local:ParameterPage2>
+        <local:ParameterPage3 Grid.Row="1" Visibility="{Binding ParameterPage3Visibility,FallbackValue=Collapsed}"></local:ParameterPage3>
         <local:HelpView Grid.Row="1" Visibility="{Binding HelpPageVisibility,FallbackValue=Collapsed}"></local:HelpView>
         <StatusBar Grid.Row="2">
             <StatusBarItem>
